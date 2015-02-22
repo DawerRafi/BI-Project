@@ -1,0 +1,5 @@
+c:\documents and settings\administrator\my documents\visual studio 2010\projects\BI-Project\BI-Project\bin\BI-Project.dll
+c:\documents and settings\administrator\my documents\visual studio 2010\projects\BI-Project\BI-Project\bin\BI-Project.pdb
+c:\documents and settings\administrator\my documents\visual studio 2010\projects\BI-Project\BI-Project\obj\Debug\ResolveAssemblyReference.cache
+c:\documents and settings\administrator\my documents\visual studio 2010\projects\BI-Project\BI-Project\obj\Debug\BI-Project.dll
+c:\documents and settings\administrator\my documents\visual studio 2010\projects\BI-Project\BI-Project\obj\Debug\BI-Project.pdb

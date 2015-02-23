@@ -16,6 +16,9 @@ namespace BI_Project
         protected void Page_Load(object sender, EventArgs e)
         {
             conn.Open();
+
+
+            /////////////////////////////////////////////////////////////////
             string str = "SELECT cust.NAME Customer_Name,TYPE Complaint_Type,op.name Operator_Name,IssueDate FROM callcenter.dbo.complaints comp,callcenter.dbo.Customer cust,callcenter.dbo.Complaint_Type typ,callcenter.dbo.Operators op WHERE comp.CUS_ID=cust.CUS_ID and comp.TYPEID=typ.TYPEID and op.OPID=comp.OPID and ResolutionDate IS NULL "
             +"and DATEDIFF(day,IssueDate,GETDATE())>20";
             OleDbCommand cmd = new OleDbCommand(str, conn);
@@ -42,12 +45,25 @@ namespace BI_Project
             }
             sampledata=sampledata.Remove(sampledata.Length - 1, 1);
             sampledata += "]";
+            /////////////////////////////////////////////////////////////////////
+
+            string query = "SELECT SUM(DATEDIFF(day,IssueDate,ResolutionDate))/COUNT(IssueDate) FROM callcenter.dbo.Complaints WHERE Resolved=1";
+            OleDbCommand command = new OleDbCommand(query, conn);
+            Int32 reader =(Int32) command.ExecuteScalar();
+            /////////////////////////////////////////////////////////////////////
+
+            string QUERY2 = "SELECT SUM(SATISFACTIONRATE)/COUNT(CID) FROM callcenter.dbo.Complaints WHERE Resolved=1";
+            OleDbCommand command2 = new OleDbCommand(QUERY2, conn);
+            double reader2 = Convert.ToDouble(command2.ExecuteScalar());
+            reader2=reader2*10;
+            /////////////////////////////////////////////////////////////////////
+
             //ScriptManager.RegisterClientScriptBlock(this, GetType(), "script", "$(document).ready(function () { Gauge(50); });", true);
             ScriptManager s = new ScriptManager();
             s.LoadScriptsBeforeUI = false;
             
             //sc.RegisterClientScriptBlock(this.GetType(), "script", "$(document).ready(function () {Gauge(50); });");
-            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(document).ready(function () {Gauge(80,0,'Satisfactory Rate'); Gauge2(10,1,'Issue Resolution Time');Gauge(50,2,'Call Connectivity'); Table("+sampledata+","+sampledata2+");  });", true);
+            ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "script", "$(document).ready(function () {Gauge("+reader2+",0,'Satisfactory Rate'); Gauge2("+reader+",1,'Issue Resolution Time');Gauge(50,2,'Call Connectivity'); Table("+sampledata+","+sampledata2+"); Chart();  });", true);
         }
         
     }

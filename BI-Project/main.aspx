@@ -21,6 +21,77 @@
     <title></title>
     <script type="text/javascript">
         // $(document).ready(function () {
+
+        function Chart(sampleData) {
+            var settings = {
+                title: "Fitness & exercise weekly scorecard",
+                description: "Time spent in vigorous exercise by activity",
+                enableAnimations: true,
+                showLegend: true,
+                padding: { left: 5, top: 5, right: 5, bottom: 5 },
+                titlePadding: { left: 90, top: 0, right: 0, bottom: 10 },
+                source: sampleData,
+                categoryAxis:
+		{
+		    text: 'Category Axis',
+		    textRotationAngle: 0,
+		    dataField: 'Day',
+		    showTickMarks: true,
+		    tickMarksInterval: 1,
+		    tickMarksColor: '#888888',
+		    unitInterval: 1,
+		    showGridLines: false,
+		    gridLinesInterval: 1,
+		    gridLinesColor: '#888888',
+		    axisSize: 'auto'
+		},
+                colorScheme: 'scheme05',
+                seriesGroups:
+		[
+			{
+			    type: 'line',
+			    valueAxis:
+				{
+				    unitInterval: 10,
+				    minValue: 0,
+				    maxValue: 100,
+				    displayValueAxis: false,
+				    description: 'Goal in minutes',
+				    axisSize: 'auto',
+				    tickMarksColor: '#888888'
+				},
+			    series: [
+						{ dataField: 'Goal', displayText: 'Personal Goal', opacity: 0.7 }
+					]
+			},
+			{
+			    type: 'column',
+			    columnsGapPercent: 100,
+			    seriesGapPercent: 5,
+			    valueAxis:
+				{
+				    unitInterval: 10,
+				    minValue: 0,
+				    maxValue: 100,
+				    displayValueAxis: true,
+				    description: 'Time in minutes',
+				    axisSize: 'auto',
+				    tickMarksColor: '#888888',
+				    gridLinesColor: '#777777'
+				},
+			    series: [
+						{ dataField: 'Running', displayText: 'Running' },
+						{ dataField: 'Swimming', displayText: 'Swimming' },
+						{ dataField: 'Cycling', displayText: 'Cycling' }
+					]
+			}
+		]
+            };
+            // setup the chart
+            $('#jqxChart').jqxChart(settings);
+        }
+
+
         function Table(dataSet, dataset2) {
             $("#tabs").tabs({
                 "activate": function (event, ui) {
@@ -81,11 +152,11 @@
                 var container = '#gaugeContainer' + yy;
                 var value = '#gaugeValue' + yy;
                 $(container).jqxGauge({
-                    ranges: [{ startValue: 0, endValue: 7, style: { fill: '#4bb648', stroke: '#e02629' }, endWidth: 16, startWidth: 13 },
-                         { startValue: 8, endValue: 13, style: { fill: '#fbd109', stroke: '#e02629' }, endWidth: 16, startWidth: 13 },
+                    ranges: [{ startValue: 0, endValue: 7, style: { fill: '#4bb648', stroke: '#e02629' }, endWidth: 11, startWidth: 10 },
+                         { startValue: 7, endValue: 14, style: { fill: '#fbd109', stroke: '#e02629' }, endWidth: 13, startWidth: 11 },
                            { startValue: 14, endValue: 30, style: { fill: '#e02629', stroke: '#e02629' }, endWidth: 16, startWidth: 13}],
-                    ticksMinor: { interval: 5, size: '5%' },
-                    ticksMajor: { interval: 10, size: '9%' },
+                    ticksMinor: { interval: 1, size: '5%' },
+                    ticksMajor: { interval: 4, size: '9%' },
                     labels: { visible: true, position: 'inside', interval: 2 },
                     value: 0,
                     max: 30,
@@ -160,12 +231,8 @@
         
         style="border: medium groove #33CCCC; position: relative; float:left; width: 24%; height: 250px; background-color: #C0C0C0;" 
         align="center">
-          <div id="Div5" 
-            style="position: relative; top: 180px; z-index:1;font-family: Sans-Serif; text-align: center; font-size: 12px; width: 30px;"></div>
-       
-	    <div style="float: none; position: relative; top: -10px;" id="Div6" 
-            >
-        </div>
+        <div id='jqxChart' style="width:100%; height:250px">
+    </div>
     </div>
     <div id="Div1" 
         
